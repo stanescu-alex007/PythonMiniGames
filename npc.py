@@ -1,14 +1,16 @@
-import npc_states
 from npc_states import *
+from utilz.constants import *
 
 
 class NPC(object):
-    def __init__(self, hp, damage, armour, magic, hunger):
+    def __init__(self, hp, damage, armour, magic_resist, magic, hunger, mana):
         self.hp = hp
         self.damage = damage
         self.armour = armour
+        self.magic_resist = magic_resist
         self.magic = magic
         self.hunger = hunger
+        self.mana = mana
         self.alive = True
 
     def getState(self):
@@ -17,22 +19,35 @@ class NPC(object):
         else:
             return NPCStates.DEAD
 
-    def takeDamage(self, debuff, damage):
+    def getMana(self):
+        return self.mana
+
+    def takeDamage(self, debuff):
         state = self.getState()
         if state == NPCStates.ALIVE:
             match debuff:
                 case NPCDeBuff.BURNING:
-                    self.hp -= damage
+                    self.hp -= NPCDeBuffDamage.fireDamage
                     print("AUCH IT'S FIREEEE!!!")
                     return
                 case NPCDeBuff.POISONED:
-                    self.hp -= damage
+                    self.hp -= NPCDeBuffDamage.poisonDamage
                     print("AUCH IT'S POISON!!!")
                     return
                 case NPCDeBuff.STARVING:
-                    self.hp -= damage
+                    self.hp -= NPCDeBuffDamage.starvingDamage
                     print("AUCH I NEED FOOD")
                     return
                 case _:
                     print("yuhuuu I am healthy!!!!!")
                     return
+
+    def healing(self):
+        state = self.getState()
+
+        if state == NPCStates.ALIVE:
+
+            self.hp += 100
+            self.mana -= 50
+
+
