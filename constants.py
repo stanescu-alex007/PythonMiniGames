@@ -1,9 +1,8 @@
-
 class NPCDeBuffDamage:
     fireDamage = 10
     poisonDamage = 8
     starvingDamage = 5
-    #healingHealth = 100
+    healingHealth = 30
 
 
 class NPCHealth:
@@ -47,8 +46,9 @@ class NPCHunger:
     pykemanHunger = 100
     wizardHunger = 100
 
+
 class NPCMana:
-    knightMana = 100
+    knightMana = 150
     archerMana = 100
-    pykemanMana = 100
-    wizardMana = 150
+    pykemanMana = 120
+    wizardMana = 200

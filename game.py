@@ -1,25 +1,25 @@
-from archer import Archer
-from knight import Knight
-from pykeman import Pykeman
-from wizard import Wizard
-from npc_states import *
+from utilz.playMethods import *
 
 
 def game():
-    knight = Knight()
+    print("----------------PLAYER 1-----------------")
+    player1_name = choseName()
+    player1_character = choseCharacter()
+    print("----------------PLAYER 2-----------------")
+    player2_name = choseName()
+    player2_character = choseCharacter()
+    print("\n\n\n\n\n")
+    while player1_character.hp > 0 or player2_character.hp > 0:
+        print(f"---------{player1_name} turn---------")
+        takeTurn(player1_character, player2_character)
 
-    print(f"Stats Knight --> HP: {knight.hp}, DMG: {knight.damage}, ARMOUR: {knight.armour}, MAGIC: {knight.magic}, "
-          f"HUNGER: {knight.hunger}, MANA: {knight.mana}")
+        if player1_character.hp <= 0 or player2_character.hp <= 0:
+            seeStats(player1_character, player1_name)
+            seeStats(player2_character, player2_name)
+            return checkWin(player1_character, player2_character, player1_name, player2_name)
 
-    knight.takeDamage(NPCDeBuff.BURNING)
-
-    print(f"Stats Knight --> HP: {knight.hp}, DMG: {knight.damage}, ARMOUR: {knight.armour}, MAGIC: {knight.magic}, "
-          f"HUNGER: {knight.hunger}, MANA: {knight.mana}")
-
-    knight.healing()
-
-    print(f"Stats Knight --> HP: {knight.hp}, DMG: {knight.damage}, ARMOUR: {knight.armour}, MAGIC: {knight.magic}, "
-          f"HUNGER: {knight.hunger}, MANA: {knight.mana}")
+        print(f"---------{player2_name} turn---------")
+        takeTurn(player2_character, player1_character)
 
 
 if __name__ == "__main__":

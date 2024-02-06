@@ -1,3 +1,4 @@
+import npc_states
 from npc_states import *
 from utilz.constants import *
 
@@ -22,7 +23,7 @@ class NPC(object):
     def getMana(self):
         return self.mana
 
-    def takeDamage(self, debuff):
+    def takeBuffDamage(self, debuff):
         state = self.getState()
         if state == NPCStates.ALIVE:
             match debuff:
@@ -46,8 +47,22 @@ class NPC(object):
         state = self.getState()
 
         if state == NPCStates.ALIVE:
+            self.hp += NPCDeBuffDamage.healingHealth + int(10 / 100 * self.mana)
+            self.mana -= 10 / 100 * NPCMana.knightMana
 
-            self.hp += 100
-            self.mana -= 50
+    def attack(self, victim):
+        state = self.getState()
+        if state == NPCStates.ALIVE:
+            if victim.armour > 0:
+                victim.hp -= int(50 / 100 * self.damage)
+                victim.armour -= int(30 / 100 * self.damage)
+                if victim.armour < 0:
+                    victim.armour = 0
+            else:
+                victim.hp -= self.damage
+                if victim.hp < 0:
+                    victim.hp = 0
 
-
+    def dead(self):
+        if self.hp == 0:
+            self.alive = False

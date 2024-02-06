@@ -17,3 +17,4 @@ class NPCDeBuff(Enum):
     STARVING = auto()
     POISONED = auto()
     BURNING = auto()
+
